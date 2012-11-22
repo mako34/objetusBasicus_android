@@ -1,8 +1,13 @@
 package com.hyper.objetus;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class ObjetusActivity extends Activity { // que quiere decir esta linea?
     /** Called when the activity is first created. */
@@ -40,12 +45,18 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
 	}
  	*/
 	
+	private com.hyper.patterns.Observable observableObj = new com.hyper.patterns.Observable();
+	private com.hyper.patterns.Observer observerObj = new com.hyper.patterns.Observer();
+	
 	
 	
 	@Override //Override-Annotation is just a hint for the compiler that you want to overwrite a certain function
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        observableObj.addObserver(observerObj); //notification en observer
+        observerObj.estamos();
         
         //testeo variables LOCALES
         int edad = 0;
@@ -69,6 +80,40 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
         Log.d("mensaje", "tu mensaje de quilinda"+persona1.queLida(" mikyaky"));
         
         persona1.listoListo();
+        
+        
+      //button techniqu 1 instanciao a mano
+    	final Button boton = (Button) findViewById(R.id.button1);
+   
+    	boton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.d("mensaje", "clickAtento notify1");
+
+		    	//Observable observableObj = new Observable();
+
+				observableObj.notificaMisPerras();
+				
+ 			}
+		});
+
+     
+    	//send notification
+    	
+    	
+    	
+  
+    	
     }
+
+	//metodo 2 por xml, el xml lo instancia
+	//nota q esta fuera del onCreate!
+	public void atentoTuClick (View view) {
+		Log.d("mensaje", "clickAtento notify2");
+		
+		
+	}
 
 }
