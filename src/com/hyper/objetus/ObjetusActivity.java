@@ -3,6 +3,11 @@ package com.hyper.objetus;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.hyper.patterns.decorator.Beverage;
+import com.hyper.patterns.decorator.HouseBlend;
+import com.hyper.patterns.decorator.Mocha;
+import com.hyper.patterns.decorator.Whip;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +48,7 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
 	public ObjetusActivity (String nombre) {
 		myInstanceConstructorVar = nombre;
 	}
- 	*/
+ 	*/ 
 	
 	private com.hyper.patterns.Observable observableObj = new com.hyper.patterns.Observable();
 	private com.hyper.patterns.Observer observerObj = new com.hyper.patterns.Observer();
@@ -89,18 +94,27 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Log.d("mensaje", "clickAtento notify1");
+ 				Log.d("mensaje", "clickAtento notify1");
 
-		    	//Observable observableObj = new Observable();
-
+			 	//send notification
 				observableObj.notificaMisPerras();
 				
  			}
 		});
 
      
-    	//send notification
+   
+    	//el decorator!
+    	
+    	Beverage beverage = new HouseBlend();
+		Log.d("mensaje", "tu beverage:"+beverage.getDescription()+"$"+beverage.cost());
+
+		beverage = new Mocha(beverage); //wrap it with a 
+		beverage = new Mocha(beverage); //wrap the sob again
+		beverage = new Whip(beverage);
+		Log.d("mensaje", "tu beverage preparada:"+beverage.getDescription()+"$"+beverage.cost());
+
+		
     	
     	
     	
@@ -108,6 +122,9 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
     	
     }
 
+	
+	
+	
 	//metodo 2 por xml, el xml lo instancia
 	//nota q esta fuera del onCreate!
 	public void atentoTuClick (View view) {
@@ -116,4 +133,8 @@ public class ObjetusActivity extends Activity { // que quiere decir esta linea?
 		
 	}
 
+	
+	//decorator
+ 
+	
 }
